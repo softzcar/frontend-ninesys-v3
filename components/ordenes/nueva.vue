@@ -219,6 +219,7 @@
                     <b-form-select
                       v-model="form.productos[data.index].talla"
                       :options="mySizes"
+                      @change="recalcularSegunTalla(data.index, form.productos[data.index])"
                     ></b-form-select>
                   </template>
 
@@ -428,7 +429,7 @@
         <b-button @click="next">{{ nextText }}</b-button>
       </b-button-group>
     </div>
-    <!-- <pre>{{ form }}</pre> -->
+    <pre>{{ form.productos }}</pre>
     <!-- <pre>{{ myCustomers }}</pre> -->
   </div>
 </template>
@@ -436,6 +437,7 @@
 <script>
 import mixins from '~/mixins/mixins.js'
 import { mapState } from 'vuex'
+import { log } from 'console'
 
 export default {
   data() {
@@ -537,6 +539,28 @@ export default {
   },
 
   methods: {
+    recalcularSegunTalla(index, item) {
+      // verificar si la talla es XL
+      let miTalla = item.talla.split("XL")      
+      let montoXL = 0
+      let finlaPrice = 0
+
+      if (miTalla.length === 2) {
+        if (!miTalla[0]) {
+          montoXL = 1 // Un dolar adiconal por la talla XL 
+        } else {
+          montoXL = parseInt(miTalla[0])
+        }
+        // this.form.productos[index].xl = montoXL
+        finlaPrice = (parseFloat(this.form.productos[index].precioWoo) + montoXL).toFixed(0)
+      } else {
+        finlaPrice = this.form.productos[index].precioWoo
+      }
+      
+      this.form.productos[index].precio = finlaPrice
+      this.montoTotalOrden()
+    },
+
     reloadVinculo(val) {
       console.log('Orden a vincular:', val);
       this.ordenVinculada = val
@@ -652,42 +676,6 @@ export default {
         })
       }
 
-      // OLD
-      /* if (
-        !this.form.cedula.trim() ||
-        !this.form.nombre.trim() ||
-        !this.form.apellido.trim() ||
-        !this.form.fechaEntrega.trim() ||
-        emailExist
-      ) {
-        let msg
-        if (emailExist) {
-          msg =
-            msg +
-            `<p>El email <strong>${this.form.email}</strong> ya ha sido registrado</p> <br> Los campos:  <strong>Cédula, Nombre, Apellido y Fecha de entrega</strong> <br />son obligatorios</p>`
-        } else {
-          msg =
-            msg +
-            '<p>Los campos:  <strong>Cédula, Nombre, Apellido y Fecha de entrega</strong> <br />son obligatorios</p>'
-        }
-
-        this.$fire({
-          type: 'info',
-          title: 'Datos requeridos',
-          html: msg,
-        })
-        // Volver a mostrar Placeholder si el campo es espacio en blanco
-        if (!this.form.cedula.trim()) this.form.cedula = ''
-        if (!this.form.nombre.trim()) this.form.nombre = ''
-
-        // ok = FontFaceSetLoadEvent
-        ok = false
-      } else {
-        // update customer
-        this.updateCustomer().then(() => {
-          this.getCustomers()
-        })
-      } */
       return ok
     },
 
@@ -1086,11 +1074,13 @@ export default {
             producto: product.name,
             existencia: product.stock_quantity,
             cantidad: 0,
-            talla: null,
             tela: null,
             corte: 'No aplica',
             tela: this.form.tela,
+            talla: null,
+            xl: 0,
             precio: product.regular_price,
+            precioWoo: product.regular_price,
           }
         })
         .find((product) => product.cod == exploited[0])
@@ -1121,6 +1111,8 @@ export default {
         tela: item.tela,
         corte: item.corte,
         precio: item.precio,
+        precioWoo: item.precio,
+        xl: 0,
       }
 
       this.form.productos.push(copy)
@@ -1184,6 +1176,19 @@ export default {
     },
 
     montoTotalOrden() {
+      if (this.form.productos.length > 0) {
+        this.form.total = 0
+        this.form.total = this.form.productos
+        .map((item) => {
+        console.log(`item pago:`, item)
+          
+          return parseFloat(item.precio) * parseInt(item.cantidad)
+        })
+        .reduce((acc, curr) => (acc = acc + curr))
+      }
+    },
+    
+    montoTotalOrden2() {
       if (this.form.productos.length > 0) {
         this.form.total = 0
         this.form.total = this.form.productos

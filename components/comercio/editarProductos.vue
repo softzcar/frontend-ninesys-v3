@@ -59,7 +59,7 @@
                     <b-form-select
                       v-model="form.products[data.index].talla"
                       :options="mySizes"
-                      @change="updateTalla(form.products[data.index])"
+                      @change="updateTalla(data.index, form.products[data.index])"
                     ></b-form-select>
                   </template>
 
@@ -105,9 +105,9 @@
               </b-col>
             </b-row>
           </b-container>
-          <!-- <pre>
-      {{ $data }}
-    </pre> -->
+          <pre>
+      {{ form }}
+    </pre>
         </b-overlay>
       </div>
 
@@ -192,6 +192,30 @@ export default {
   },
 
   methods: {
+    recalcularSegunTalla(index, item) {
+      // verificar si la talla es XL
+      console.log('recacultar talla index', index);
+      console.log('recacultar talla item', item);
+      let miTalla = item.talla.split("XL")      
+      let montoXL = 0
+      let finlaPrice = 0
+
+      if (miTalla.length === 2) {
+        if (!miTalla[0]) {
+          montoXL = 1 // Un dolar adiconal por la talla XL 
+        } else {
+          montoXL = parseInt(miTalla[0])
+        }
+        // this.form.productos[index].xl = montoXL
+        finlaPrice = (parseFloat(this.form.products[index].precioWoo) + montoXL).toFixed(0)
+      } else {
+        finlaPrice = this.form.products[index].precioWoo
+      }
+      
+      this.form.products[index].precio = finlaPrice
+      // this.montoTotalOrden()
+    },
+
     async saveObs() {
       this.overlay = true
       const data = new URLSearchParams()
@@ -285,12 +309,13 @@ export default {
       })
     },
 
-    async updateTalla(item) {
-      console.log('item recibido', item)
+    async updateTalla(index, item) {
+      this.recalcularSegunTalla(index, item)
       this.overlay = true
       const data = new URLSearchParams()
       data.set('id', item._id)
       data.set('cantidad', item.talla)
+      data.set('precio', item.precio)
       data.set('accion', 'editar-talla')
 
       await axios.post(`${this.$config.API}/orden/editar`, data).then((res) => {
@@ -437,6 +462,8 @@ export default {
               tela: null,
               corte: 'No aplica',
               precio: product.regular_price,
+              precioWoo: product.regular_price,
+              
             }
           })
           .find((product) => product.cod == exploited[0])
@@ -467,6 +494,7 @@ export default {
             tela: item.tela,
             corte: item.corte,
             precio: item.precio,
+            precioWoo: product.regular_price,
           }
 
           this.form.products.push(copy)
