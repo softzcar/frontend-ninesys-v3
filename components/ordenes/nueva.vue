@@ -185,7 +185,7 @@
               <b-col lg="12" class="mt-4">
                 <b-table
                   responsive
-                  ::primary-key="form.productos.item"
+                  :primary-key="form.productos.item"
                   :fields="campos"
                   :items="form.productos"
                 >

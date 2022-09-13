@@ -105,25 +105,28 @@
               </b-col>
             </b-row>
           </b-container>
-          <pre>
-      {{ form.products }}
-    </pre>
+          <!-- <pre>
+      {{ $data }}
+    </pre> -->
         </b-overlay>
       </div>
 
       <div v-else>
         <b-alert show variant="warning">
-          <h4 class="alert-heading">El lote {{ item.orden }} se encuentra en producción</h4>
-          <p>
-            Ya no es posible hacer cambios a esta orden.
-          </p>
+          <h4 class="alert-heading">
+            El lote {{ item.orden }} se encuentra en producción
+          </h4>
+          <p>Ya no es posible hacer cambios a esta orden.</p>
           <p class="mb-0">
-            Para añadir productos, <NuxtLink  to="/comercializacion/ordenes"> cree una orden nueva</NuxtLink>  y vinculela la Orden número {{ item.orden }}.
+            Para añadir productos,
+            <NuxtLink to="/comercializacion/ordenes">
+              cree una orden nueva</NuxtLink
+            >
+            y <strong>vinculela la Orden número {{ item.orden }}.</strong>
           </p>
         </b-alert>
       </div>
     </b-modal>
-   
   </div>
 </template>
 
@@ -192,13 +195,15 @@ export default {
     async saveObs() {
       this.overlay = true
       const data = new URLSearchParams()
-			data.set('obs', this.form.obs)
-			data.set('id', this.item.orden)
-      
-			await axios.post(`${this.$config.API}/orden/edit/obs`, data).then(res => {
-        this.overlay = false
-        // this.$emit('reload', 'true')
-			})
+      data.set('obs', this.form.obs)
+      data.set('id', this.item.orden)
+
+      await axios
+        .post(`${this.$config.API}/orden/edit/obs`, data)
+        .then((res) => {
+          this.overlay = false
+          // this.$emit('reload', 'true')
+        })
     },
 
     async verificarEdicion() {
@@ -208,7 +213,7 @@ export default {
         .then((resp) => {
           let paso = resp.data.paso
 
-          if (paso === "diseno") {
+          if (paso === 'diseno') {
             this.editable = true
           } else {
             this.editable = false
@@ -390,53 +395,58 @@ export default {
       })
     },
 
+    // TODO Al presioanr e insertar un nuevo producto presionando enter envia dos llamadas al servidor creando elproducto dos veces...
     async loadProduct(val) {
-      console.log('valor recibido ', val);
       let exploited = val.split('|')
 
-      // TODO buscar datos de productos con un filter en la variable de productos para pasar ;lps datos via POST al servidor
+      let prodSelected = this.products
+        .filter((prod) => prod.id === parseInt(exploited[0]))
+        .map((item) => {
+          let resp = {
+            id_woo: item.id,
+            name: item.name,
+            regular_price: item.regular_price,
+          }
+          return resp
+        })
+
       this.overlay = true
       const data = new URLSearchParams()
-      data.set('id', item._id)
-      data.set('id_orden', item.id_orden)
-      data.set('id_woo', item.cod)
-      data.set('name', item.producto)
-      data.set('cantidad', item.cantidad)
+      data.set('id_orden', this.item.orden)
+      data.set('id_woo', prodSelected[0].id_woo)
+      data.set('name', prodSelected[0].name)
+      data.set('cantidad', 0)
       data.set('cantidad_lote', 0)
-      data.set('talla', item.talla)
-      data.set('corte', item.corte)
-      data.set('tela', item.tela)
-      data.set('precio_unitario', item.precio)
+      data.set('talla', null)
+      data.set('corte', 'No aplica')
+      data.set('tela', null)
+      data.set('precio_unitario', prodSelected[0].regular_price)
       data.set('accion', 'nuevo-producto')
 
       await axios.post(`${this.$config.API}/orden/editar`, data).then((res) => {
+        let count = 0
+        let dataProd = this.products
+          .map((product) => {
+            return {
+              item: count++,
+              cod: product.id,
+              producto: product.name,
+              existencia: product.stock_quantity,
+              cantidad: 0,
+              talla: null,
+              tela: null,
+              corte: 'No aplica',
+              precio: product.regular_price,
+            }
+          })
+          .find((product) => product.cod == exploited[0])
+
+        this.query = ''
+
+        this.form.products.push(dataProd)
+        this.form.products.sort(this.dynamicSort('producto'))
         this.overlay = false
-        // this.urlLink = res.data.linkdrive
       })
-
-
-      let count = 0
-      let dataProd = this.products
-        .map((product) => {
-          return {
-            item: count++,
-            cod: product.id,
-            producto: product.name,
-            existencia: product.stock_quantity,
-            cantidad: 0,
-            talla: null,
-            tela: null,
-            corte: 'No aplica',
-            tela: this.form.tela,
-            precio: product.regular_price,
-          }
-        })
-        .find((product) => product.cod == exploited[0])
-
-      this.query = ''
-
-      this.form.products.push(dataProd)
-      this.form.products.sort(this.dynamicSort('producto'))
 
       return dataProd
     },
@@ -491,40 +501,42 @@ export default {
 
   mounted() {
     this.overlay = true
-    
-    this.verificarEdicion().then(() => {
-      if (this.editable) {
-        this.getProductsOrder()
-    
-        this.ozhttp({
-          url: '/telas',
-          method: 'get',
-        }).then(() => {
-          this.myTelas = this.json.data.map((item) => {
-            return {
-              value: item.tela,
-              text: item.tela,
-            }
-          })
-        })
-    
-        this.getProducts()
 
-        this.form.obs = this.item.obs
-    
-        this.ozhttp({
-          url: '/sizes',
-          method: 'get',
-        }).then(() => {
-          this.mySizes = this.json.data.map((item) => {
-            return {
-              value: item.name,
-              text: item.name,
-            }
+    this.verificarEdicion()
+      .then(() => {
+        if (this.editable) {
+          this.getProductsOrder()
+
+          this.ozhttp({
+            url: '/telas',
+            method: 'get',
+          }).then(() => {
+            this.myTelas = this.json.data.map((item) => {
+              return {
+                value: item.tela,
+                text: item.tela,
+              }
+            })
           })
-        })
-      }
-    }).then(() => this.overlay = false)
+
+          this.getProducts()
+
+          this.form.obs = this.item.obs
+
+          this.ozhttp({
+            url: '/sizes',
+            method: 'get',
+          }).then(() => {
+            this.mySizes = this.json.data.map((item) => {
+              return {
+                value: item.name,
+                text: item.name,
+              }
+            })
+          })
+        }
+      })
+      .then(() => (this.overlay = false))
 
     // modal hide
     this.$root.$on('bv::modal::hide', (bvEvent, modal) => {
