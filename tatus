@@ -1,0 +1,92 @@
+[33mcommit e8091e126150b7e88c7c6eb64668a1fc1a13f764[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m)[m
+Author: Ozcar Manuel Atencio Vela <softzcar@gmail.com>
+Date:   Sun Feb 27 14:44:18 2022 -0400
+
+    Reinstalado nuxt/axios
+
+[33mcommit ad8c838c897d58480bcbc0624a16b63445ec9656[m
+Author: Ozcar Manuel Atencio Vela <softzcar@gmail.com>
+Date:   Fri Feb 25 14:08:57 2022 -0400
+
+    Commit previo a la implementacion global del store
+
+[33mcommit 6a394df54ebde4716f74ef21594b160dfb52656d[m
+Author: Ozcar Manuel Atencio Vela <softzcar@gmail.com>
+Date:   Wed Feb 23 20:07:58 2022 -0400
+
+    Listo el modulo de generar nueva orden
+    
+    Quedó creado el esilo .hideMe en  main.css
+
+[33mcommit 2964a7882063f450162528dab20734e99b7dae47[m
+Author: Ozcar Manuel Atencio Vela <softzcar@gmail.com>
+Date:   Wed Feb 16 11:17:09 2022 -0400
+
+    Listo imprimir orden desde el Wizard, falta guardar la orden en la base de datos
+
+[33mcommit 0b88cd82a9432d1146acc8b42a844e62120648de[m
+Author: Ozcar Manuel Atencio Vela <softzcar@gmail.com>
+Date:   Tue Feb 15 12:57:51 2022 -0400
+
+    Listoo el Wizard hasta el Step4 commit previo a la instalaciond elpligin apra imprimir
+
+[33mcommit 51dcfd6a166d9f7eb107a7e9d1f07f2a1ac9cea6[m
+Author: Ozcar Manuel Atencio Vela <softzcar@gmail.com>
+Date:   Mon Feb 14 20:18:45 2022 -0400
+
+    Duplicar productos en la tabla terminado
+
+[33mcommit e84cbeeddbe394fc7ab343de2f84c0c3ee9093e3[m
+Author: Ozcar Manuel Atencio Vela <softzcar@gmail.com>
+Date:   Mon Feb 14 16:33:03 2022 -0400
+
+    Paso uno validado y listo este commit es previo a la intación de
+    npm install --save bootstrap/scss/bootstrap.scss
+
+[33mcommit 16c516635bb037385aa6fd601c6234a9be41d734[m
+Author: Ozcar Manuel Atencio Vela <softzcar@gmail.com>
+Date:   Mon Feb 14 10:18:38 2022 -0400
+
+    Reprogramacion de las aletras,a hora se sará  con parametro type:  para indcar el tipo de alerta, lista la valicación del paso uno del formulario nuva orden
+
+[33mcommit acc2eaef0d46bc66695f9622e5387a02a1911f82[m
+Author: Ozcar Manuel Atencio Vela <softzcar@gmail.com>
+Date:   Sat Feb 12 22:09:31 2022 -0400
+
+    Loading para los componenetes funcionando
+
+[33mcommit 9bdce9789b8daa318c4cf8651d9f3bcf9c73a20c[m
+Author: Ozcar Manuel Atencio Vela <softzcar@gmail.com>
+Date:   Sat Feb 12 12:31:16 2022 -0400
+
+    Listo reposicion de modulo de busqueda y programacion del store para la nusqueda, tambien listaa la preogamaciosn del error 404 e implementado la restriccion a modulos por departementos
+
+[33mcommit 7d46a27336c2865c90907cc23ac14caac6d52203[m
+Author: Ozcar Manuel Atencio Vela <softzcar@gmail.com>
+Date:   Thu Feb 10 21:50:44 2022 -0400
+
+    Listo maquetacion del menu y barra de busquedas
+
+[33mcommit 6fd541edb8f33ddb89a9363abbbfc8fbed51e330[m
+Author: Ozcar Manuel Atencio Vela <softzcar@gmail.com>
+Date:   Thu Feb 10 19:42:53 2022 -0400
+
+    Login listo
+
+[33mcommit 4520b4c7305a1ae473e4268db5bc8cd4543dcf33[m[33m ([m[1;31morigin/master[m[33m)[m
+Author: Ozcar <softzcar@gmail.com>
+Date:   Wed Feb 2 18:11:57 2022 -0400
+
+    Terminado modulo de login
+
+[33mcommit ac395d3e7949836b294bfb129710402c84609e5d[m
+Author: Ozcar <softzcar@gmail.com>
+Date:   Tue Feb 1 21:17:52 2022 -0400
+
+    Primera instalacion de dependencias
+
+[33mcommit adf6ba8959f56cb67a5e1e49b5e97f97e90936d7[m
+Author: Ozcar <softzcar@gmail.com>
+Date:   Tue Feb 1 21:01:45 2022 -0400
+
+    Instalación limpia

@@ -1,0 +1,51 @@
+pre {
+  background-color: antiquewhite;
+  padding: 1rem !important;
+  font-family: monospace;
+  color: black;
+  box-shadow: inset;
+  text-align: left !important;
+}
+em {
+  color: grey;
+}
+[info-form] {
+  border-top: 1px solid lightgrey;
+  padding-top: 6px;
+  margin: 38px 0 18px;
+  font-style: italic;
+  color: grey;
+}
+[required] {
+  color: red;
+  font-weight: 800;
+}
+/* WIZARD */
+
+.vue-form-wizard .wizard-icon-circle .wizard-icon-container {
+  border-radius: 50% !important;
+}
+
+.vue-form-wizard.md .wizard-icon-circle {
+  width: 70px;
+  height: 70px;
+  font-size: 24px;
+  border-radius: 50% !important;
+  background-color: #17a2b8 !important;
+}
+.vue-form-wizard .wizard-nav-pills > li > a .wizard-icon {
+  color: white !important;
+}
+
+/* Colapsar b-list-goroup del STEP3 del wixar apra emular responsive */
+@media screen and (min-width: 768px) {
+  .custom-collapse .collapse {
+    display: block;
+  }
+}
+
+/* Separar botones */
+.floatme {
+  float: left;
+  margin-right: 0.4rem;
+}
