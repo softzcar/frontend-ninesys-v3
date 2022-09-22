@@ -2,6 +2,10 @@
   <div>
     <b-overlay :show="overlay" spinner-small>
       <h6>Asignar {{ departamento }}</h6>
+      <p>Módulo en construccion `asignarEmpleado.vue`</p>
+      <!-- <pre>
+        {{ item }}
+      </pre> -->
       <span class="floatme">
         <b-form-select
           v-model="selected"
@@ -45,11 +49,12 @@ export default {
   methods: {
     updateEmpleado() {
       // this.overlay = true
-
+      console.log('item en reasdingar empleado', this.item);
       const data = new URLSearchParams()
       data.set('id_orden', this.item.id_orden)
       data.set('id_ordenes_productos', this.item._id)
       data.set('id_empleado', this.selected)
+      data.set('id_woo', this.item.id_woo)
       data.set('departamento', this.departamento)
 
       console.log('datos a guardar')

@@ -13,7 +13,9 @@
       <b-overlay :show="overlay" spinner-small>
         <p class="my-4">
           <pre>
-            {{ datos }}
+            EMP: {{ empleado }}
+            <hr />
+            PROPS: {{ $props }}
           </pre>
           <b-list-group>
             <b-list-group-item

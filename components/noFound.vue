@@ -8,7 +8,6 @@
             <h1>Este módulo no existe</h1>
             <h2>{{ $route.path }}</h2>
           </b-alert>
-          <b-button>TEST CLICK</b-button>
         </b-col>
       </b-row>
     </b-container>

@@ -55,6 +55,9 @@
                           :options="optionsEmpleados"
                           departamento="Corte"
                         />
+                        <div class="floatme" style="margin-top: 8px">
+                          <produccion-reposicion departamento="corte" :item="item" />
+                        </div>
                       </b-col>
                     </b-row>
                   </b-tab>
@@ -149,12 +152,14 @@
                           <li><strong>Talla:</strong> {{ item.talla }}</li>
                         </ul>
                         <hr />
-                        <produccion-asignar-empleado
-                          :item="item"
-                          :options="optionsEmpleados"
-                          departamento="Revisión"
-                          @emitReload="reload"
-                        />
+                        <div class="floatme" style="margin-top: 12px">
+                          <produccion-asignar-empleado
+                            :item="item"
+                            :options="optionsEmpleados"
+                            departamento="Revisión"
+                            @emitReload="reload"
+                          />
+                        </div>
                       </b-col>
                     </b-row>
                   </b-tab>

@@ -18,17 +18,29 @@
               <b-nav-item to="/comercializacion/ordenes/activas">
                 Ordenes En Curso
               </b-nav-item>
-              
-              <b-nav-item to="/comercializacion/reportes/general">
-                Reporte General de Ordenes
-              </b-nav-item>
 
-              <!-- <b-nav-item href="/ordenes/reimprimir">
-                Reimprimir Orden
-              </b-nav-item> -->
+              <b-nav-item-dropdown text="Reportes" right>
+                <b-dropdown-item to="/comercializacion/reportes/pagos-abonos">
+                  Pagos y Abonos
+                </b-dropdown-item>
 
-              <b-nav-item href="/">
-                Salir</b-nav-item>
+                <hr />
+                
+                <b-dropdown-item to="/comercializacion/reportes/terminadas">
+                  Ordenes Terminadas
+                </b-dropdown-item>
+                
+                <b-dropdown-item to="/comercializacion/reportes/entregadas">
+                  Ordenes Entregadas
+                </b-dropdown-item>
+                
+                <b-dropdown-item to="/comercializacion/reportes/general">
+                  Reporte General de Ordenes
+                </b-dropdown-item>
+                
+              </b-nav-item-dropdown>
+
+              <b-nav-item href="/"> Salir</b-nav-item>
             </b-navbar-nav>
 
             <!-- Right aligned nav items -->
@@ -49,21 +61,21 @@ import { mapState } from 'vuex'
 import buscar from '~/components/buscar/BarraDeBusqueda.vue'
 
 export default {
-	computed: {
-		...mapState('login', ['dataUser']),
-	},
-	components: {
-		buscar,
-	},
-	props: ['user', 'departamento'],
+  computed: {
+    ...mapState('login', ['dataUser']),
+  },
+  components: {
+    buscar,
+  },
+  props: ['user', 'departamento'],
 }
 </script>
 
 <style scoped>
 .user-info {
-	font-size: 1.2rem;
+  font-size: 1.2rem;
 }
 .buscar {
-	margin-top: 2rem;
+  margin-top: 2rem;
 }
 </style>

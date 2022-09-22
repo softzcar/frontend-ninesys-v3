@@ -37,8 +37,9 @@
                   <template #cell(item)="data">
                     {{ data.index + 1 }}
                   </template>
-
+                  
                   <template #cell(cantidad)="data">
+                    <!-- <pre>{{ data.item }}</pre> -->
                     <b-form-input
                       v-model="form.products[data.index].cantidad"
                       min="0"
@@ -105,9 +106,9 @@
               </b-col>
             </b-row>
           </b-container>
-          <pre>
+          <!-- <pre>
       {{ form }}
-    </pre>
+    </pre> -->
         </b-overlay>
       </div>
 
@@ -133,6 +134,7 @@
 <script>
 import axios from 'axios'
 import mixins from '~/mixins/mixins.js'
+import { log } from 'console'
 
 export default {
   data() {
@@ -150,7 +152,7 @@ export default {
         obs: '',
       },
       campos: [
-        { key: 'item', label: 'Item' },
+        // { key: 'item', label: 'Item' },
         { key: 'cod', label: 'ID' },
         { key: 'producto', label: 'producto' },
         { key: 'precio', label: 'precio' },
@@ -236,8 +238,8 @@ export default {
         .get(`${this.$config.API}/ordenes/verificar-edición/${this.item.orden}`)
         .then((resp) => {
           let paso = resp.data.paso
-
-          if (paso === 'diseno') {
+          console.log(' paso para vetrificar si es editable', paso);
+          if (paso === 'diseno' || paso === 'produccion') {
             this.editable = true
           } else {
             this.editable = false
@@ -254,6 +256,7 @@ export default {
       this.overlay = true
       const data = new URLSearchParams()
       data.set('id', item._id)
+      data.set('id_orden', item.id_orden)
       data.set('cantidad', item.cantidad)
       data.set('accion', 'editar-cantidad')
 
@@ -288,6 +291,7 @@ export default {
       data.set('corte', item.corte)
       data.set('tela', item.tela)
       data.set('precio_unitario', item.precio)
+      data.set('precio_woo', item.precioWoo)
       data.set('accion', 'nuevo-producto')
 
       await axios.post(`${this.$config.API}/orden/editar`, data).then((res) => {
@@ -314,6 +318,7 @@ export default {
       this.overlay = true
       const data = new URLSearchParams()
       data.set('id', item._id)
+      data.set('id_orden', item.id_orden)
       data.set('cantidad', item.talla)
       data.set('precio', item.precio)
       data.set('accion', 'editar-talla')
@@ -343,6 +348,7 @@ export default {
       this.overlay = true
       const data = new URLSearchParams()
       data.set('id', item._id)
+      data.set('id_orden', item.id_orden)
       data.set('cantidad', item.tela)
       data.set('accion', 'editar-tela')
 
@@ -462,7 +468,7 @@ export default {
               tela: null,
               corte: 'No aplica',
               precio: product.regular_price,
-              precioWoo: product.regular_price,
+              precioWoo: product.precio_woo,
               
             }
           })
@@ -494,9 +500,13 @@ export default {
             tela: item.tela,
             corte: item.corte,
             precio: item.precio,
-            precioWoo: product.regular_price,
+            precioWoo: item.precioWoo,
           }
 
+          console.log('item original', item);
+          console.log('copia del producto a duplicar', copy);
+
+          // this.form.products.push(copy)
           this.form.products.push(copy)
 
           let mySort = this.form.products.sort(function (a, b) {

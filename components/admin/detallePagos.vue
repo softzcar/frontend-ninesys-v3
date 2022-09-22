@@ -2,7 +2,7 @@
   <div>
     <div>
       <b-button variant="primary" @click="$bvModal.show(modal)">
-        <b-icon icon="credit-card"></b-icon>
+        <b-icon icon="eye"></b-icon>
       </b-button>
 
       <b-modal :id="modal" :title="title" hide-footer size="lg">
@@ -51,7 +51,7 @@
               successMsg
             }}</b-alert>
           </div>
-          <div class="mb-4">
+          <!-- <div class="mb-4">
             <h4 class="mt-4">Asigne el abono y descuento</h4>
             <b-form-input
               min="0"
@@ -76,7 +76,7 @@
             block
             @click="hacerAbono"
             >Abonar</b-button
-          >
+          > -->
         </b-overlay>
       </b-modal>
     </div>

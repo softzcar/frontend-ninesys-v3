@@ -414,7 +414,9 @@
             <b-row>
               <b-col>
                 <div id="reporte">
-                  <ordenes-preview :form="formPrint" :showpreview="true" />
+                  <b-overlay :show="overlay">
+                    <ordenes-preview :form="formPrint" :showpreview="true" />
+                  </b-overlay>
                 </div>
               </b-col>
             </b-row>
@@ -449,6 +451,8 @@ export default {
       nextText: 'Siguiente',
 
       ordenVinculada: 0,
+
+      overlay: false,
 
       tabIndex: 0,
       query: '',
@@ -1028,6 +1032,7 @@ export default {
             })
             .then(() => (this.overlay = false))
           // return data.orden_nro
+          this.overlay = false
         })
     },
 
@@ -1111,7 +1116,7 @@ export default {
         tela: item.tela,
         corte: item.corte,
         precio: item.precio,
-        precioWoo: item.precio,
+        precioWoo: item.precioWoo,
         xl: 0,
       }
 
