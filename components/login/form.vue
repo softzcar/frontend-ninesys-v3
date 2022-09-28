@@ -117,7 +117,7 @@ export default {
               this.$store.commit('login/setDataUser', res.data.data)
               this.$store.commit('login/setAccess', res.data.data.access)
               // this.setDataUser(res.data.data.res)
-              console.log(`Store Login:`, this.$store.state.login)
+              // console.log(`Store Login:`, this.$store.state.login)
             } else {
               this.loading = false
               this.$fire({

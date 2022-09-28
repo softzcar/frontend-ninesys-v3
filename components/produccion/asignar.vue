@@ -19,13 +19,14 @@
                 :items="itemsProducts"
                 :fields="fieldsProducts"
               >
-                <template #cell(_id)="data">
-                  <produccion-guardar-cantidad
+                <!--<template #cell(_id)="data">
+                   <produccion-guardar-cantidad
                     :cantidadLote="data.item.cantidad_lote"
                     :id="data.item._id"
-                    @reload="getLotInfo"
-                  />
-                </template>
+                    @reload="setReload" 
+                  /> 
+                  {{ data.item }}
+                </template>-->
               </b-table>
             </b-col>
           </b-row>
@@ -51,13 +52,17 @@
                         <hr />
                         <produccion-asignar-empleado
                           :item="item"
-                          :reload="reload"
+                          :lote="loteInfo.lote_detalles"
+                          @reload="setReload" 
                           :options="optionsEmpleados"
                           departamento="Corte"
                         />
-                        <div class="floatme" style="margin-top: 8px">
-                          <produccion-reposicion departamento="corte" :item="item" />
-                        </div>
+                        <!-- <produccion-guardar-cantidad
+                          :cantidadLote="item.cantidad_lote"
+                          :id="item._id"
+                          @reload="setReload" 
+                        /> -->
+                        <!-- RELOAD::: <pre>{{ reload }}</pre> -->
                       </b-col>
                     </b-row>
                   </b-tab>
@@ -79,7 +84,7 @@
                         <hr />
                         <produccion-asignar-empleado
                           :item="item"
-                          :reload="reload"
+                          @reload="setReload" 
                           :options="optionsEmpleados"
                           departamento="Estampado"
                         />
@@ -104,7 +109,7 @@
                         <hr />
                         <produccion-asignar-empleado
                           :item="item"
-                          :reload="reload"
+                          @reload="setReload" 
                           :options="optionsEmpleados"
                           departamento="Impresión"
                         />
@@ -129,7 +134,7 @@
                         <hr />
                         <produccion-asignar-empleado
                           :item="item"
-                          :reload="reload"
+                          @reload="setReload" 
                           :options="optionsEmpleados"
                           departamento="Confección"
                         />
@@ -152,14 +157,12 @@
                           <li><strong>Talla:</strong> {{ item.talla }}</li>
                         </ul>
                         <hr />
-                        <div class="floatme" style="margin-top: 12px">
-                          <produccion-asignar-empleado
-                            :item="item"
-                            :options="optionsEmpleados"
-                            departamento="Revisión"
-                            @emitReload="reload"
-                          />
-                        </div>
+                        <produccion-asignar-empleado
+                          :item="item"
+                          :options="optionsEmpleados"
+                          departamento="Revisión"
+                          @reload="setReload" 
+                        />
                       </b-col>
                     </b-row>
                   </b-tab>
@@ -186,7 +189,17 @@ export default {
       title: 'Asignar',
       loteInfo: [],
       optionsEmpleados: [],
-      // reload: false,
+      reload: false
+    }
+  },
+
+  watch: {
+    reload() {
+      console.log('RELOAD NOW!!!');
+      if (this.reload) {
+        this.overlay = true
+        this.getLotInfo().then(() => this.overlay = false)
+      }
     }
   },
 
@@ -205,7 +218,11 @@ export default {
     },
 
     fieldsProducts() {
-      return this.loteInfo.fields_orden_productos
+      let arr = []
+
+      arr.push(this.loteInfo.fields_orden_productos)
+
+      return arr
       // return this.$store.state.produccion.loteDetalles.fields_orden_productos
     },
 
@@ -216,8 +233,8 @@ export default {
   },
 
   methods: {
-    reload: function (val) {
-      alert('he recibido', val)
+    setReload(val) {
+      this.reload = val
     },
     token() {
       const length = 8
@@ -237,6 +254,7 @@ export default {
       await axios
         .get(`${this.$config.API}/lotes/detalles/v2/${this.id}`)
         .then((res) => {
+          console.log('LOTEINFO:::', res.data)
           this.loteInfo = res.data
         })
     },

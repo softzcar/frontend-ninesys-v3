@@ -39,8 +39,9 @@ export default {
             html: `Error al actaulizar la cantidad del lote: ${err}`,
           })
         })
-    },
+      }
   },
+
 
   mounted() {
     this.cantidad = this.cantidadLote

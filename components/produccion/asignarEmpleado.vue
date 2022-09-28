@@ -1,21 +1,32 @@
 <template>
   <div>
     <b-overlay :show="overlay" spinner-small>
-      <h6>Asignar {{ departamento }}</h6>
-      <p>Módulo en construccion `asignarEmpleado.vue`</p>
-      <!-- <pre>
-        {{ item }}
-      </pre> -->
+      <pre>
+        {{ $props.lote }}
+      </pre>
       <span class="floatme">
+        <label>Empleado</label>
         <b-form-select
           v-model="selected"
           :options="empleadosSelect"
-          size="sm"
+          size="md"
           class="mt-3"
           @change="updateEmpleado"
         ></b-form-select>
       </span>
-      <span class="floatme mt-2">
+
+      <span class="floatme mt-3">
+        <label>Cantidad</label>
+        <b-input
+          v-model="cantidad"
+          size="md"
+          style="width: 85px"
+          type="number"
+          @change="changeCantidad"
+        />
+      </span>
+
+      <span class="floatme" style="margin-top: 47px">
         <inventario-InsumoAsignar
           :datos="item"
           :empleado="selected"
@@ -35,10 +46,26 @@ export default {
     return {
       overlay: true,
       selected: null,
+      cantidad: 0
     }
   },
 
   computed: {
+    idLoteDetalles() {
+      let cantidadActual = 0
+
+      if (!this.selected) {
+        cantidadActual = this.item.cantidad
+      } else {
+        let tmp = this.lote.filter(
+          (dato) => dato.id_ordenes_productos === this.item._id
+        )
+        // cantidadActual = tmp.unidades_solicitadas
+        cantidadActual = tmp[0]._id
+      }
+      return cantidadActual
+    },
+
     empleadosSelect() {
       return this.options.map((item) => {
         return { value: item._id, text: item.nombre }
@@ -47,9 +74,31 @@ export default {
   },
 
   methods: {
+    changeCantidad() {
+      this.overlay = true
+      const data = new URLSearchParams()
+      data.set('cantidad', this.cantidad)
+      data.set('id', this.idLoteDetalles)
+
+      axios
+        .post(`${this.$config.API}/lotes/update/cantidad`, data)
+        .then((res) => {
+          console.log('vamos a recargar lotes y porductos');
+          this.$emit('reload', true)
+          this.overlay = false
+        })
+        .catch((err) => {
+          this.$fire({
+            title: 'Error',
+            type: 'error',
+            html: `Error al actaulizar la cantidad del lote: ${err}`,
+          })
+        })
+    },
+
     updateEmpleado() {
       // this.overlay = true
-      console.log('item en reasdingar empleado', this.item);
+      console.log('item en reasdingar empleado', this.item)
       const data = new URLSearchParams()
       data.set('id_orden', this.item.id_orden)
       data.set('id_ordenes_productos', this.item._id)
@@ -71,6 +120,20 @@ export default {
   },
 
   mounted() {
+    // this.cantidad = this.item.cantidad
+    let cantidadActual = 0
+
+        if (!this.selected) {
+          cantidadActual = this.item.cantidad
+        } else {
+          let tmp = this.lote.filter(
+            (dato) => dato.id_ordenes_productos === this.item._id
+          )
+          // cantidadActual = tmp.unidades_solicitadas
+          cantidadActual = tmp[0].unidades_solicitadas
+        }
+        this.cantidad = cantidadActual
+
     axios
       .get(
         `${this.$config.API}/empleado/asignado/${this.prepareDep(
@@ -80,14 +143,22 @@ export default {
       .then((res) => {
         if (!res.data.id_empleado.length) {
           this.selected = 0
+          this.cantidad = this.item.cantidad
         } else {
           this.selected = res.data.id_empleado[0].id_empleado
+
+          let tmp = this.lote.filter(
+            (dato) => dato.id_ordenes_productos === this.item._id
+          )
+          // cantidadActual = tmp.unidades_solicitadas
+          this.cantidad = tmp[0].unidades_solicitadas
           this.overlay = false
         }
         this.overlay = false
       })
       .catch((err) => {
         console.log('ERROR!!!!', err)
+        this.overlay = false
       })
 
     this.empleadosSelect.push({ value: '0', text: 'SIN ASIGNAR' })
@@ -95,6 +166,6 @@ export default {
 
   mixins: [mixin],
 
-  props: ['item', 'departamento', 'options'],
+  props: ['item', 'reload', 'departamento', 'options', 'lote'],
 }
 </script>

@@ -48,6 +48,7 @@
             :options="options"
             @change="guardarInsumoEmpleado"
           ></b-form-select>
+          <!-- <b-form-input type="number"></b-form-input> -->
         </p>
 
         <p>
