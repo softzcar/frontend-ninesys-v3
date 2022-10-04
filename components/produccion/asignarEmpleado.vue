@@ -1,9 +1,9 @@
 <template>
   <div>
     <b-overlay :show="overlay" spinner-small>
-      <pre>
+      <!-- <pre>
         {{ $props.lote }}
-      </pre>
+      </pre> -->
       <span class="floatme">
         <label>Empleado</label>
         <b-form-select

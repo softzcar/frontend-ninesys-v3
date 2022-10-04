@@ -34,7 +34,7 @@
           <produccion-asignar :reload="reload" :id="data.orden" />
         </div>
         <div class="floatme" style="margin-top: 12px">
-          <produccion-reposicion :reload="reload" :item="data" />
+          <produccion-reposicion :departamento="departamento" :reload="reload" :item="data" />
         </div>
       </div>
     </b-overlay>

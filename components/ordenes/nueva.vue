@@ -431,7 +431,7 @@
         <b-button @click="next">{{ nextText }}</b-button>
       </b-button-group>
     </div>
-    <pre>{{ form.productos }}</pre>
+    <!-- <pre>{{ form.productos }}</pre> -->
     <!-- <pre>{{ myCustomers }}</pre> -->
   </div>
 </template>

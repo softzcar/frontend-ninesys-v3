@@ -5,10 +5,13 @@
     </b-button>
 
     <b-modal :size="size" :title="title" :id="modal" hide-footer>
+      <!-- <pre>
+        {{ pasoActual }}
+        <hr />
+      {{ $props }}
+    </pre
+      >       -->
       <b-overlay :show="overlay" spinner-small>
-        <p>
-        <pre>{{ $props }}</pre>
-        </p>
         <b-container>
           <b-row>
             <b-col xl="6" lg="6" md="6" sm="12">
@@ -20,7 +23,9 @@
                   <b-list-group>
                     <span>
                       <strong>Paso actual:</strong>
-                      <span style="text-transform: uppercase;">{{ item.paso }}</span>
+                      <span style="text-transform: uppercase; background-color:#fff3cd; font-weight: 700; padding: 4px;">{{
+                        item.paso
+                      }}</span>
                     </span>
                   </b-list-group>
                   <!-- <b-list-group>
@@ -31,8 +36,12 @@
             </b-col>
           </b-row>
           <b-row>
-            <b-col xl="6" lg="6" md="6" sm="12">
-              <b-table hover :items="items"></b-table>
+            <b-col class="mt-4">
+              <b-table hover :items="tablaProductos">
+                <template #cell(Reponer)="data">
+                  <produccion-reposicion-form :item="data" />
+                </template>
+              </b-table>
             </b-col>
           </b-row>
         </b-container>
@@ -41,71 +50,95 @@
   </div>
 </template>
 
-  <script>
-  import axios from 'axios'
+<script>
+import axios from 'axios'
 
-  export default {
-    data() {
-      return {
-        size: 'lg',
-        title: 'Reposición de piezas',
-        overlay: true,
-        items: [
-          {
-            Orden: this.item.orden,
-            Cliente: this.item.cliente,
-            Paso: this.item.paso,
-          }
-        ]
-      }
+export default {
+  data() {
+    return {
+      size: 'xl',
+      title: 'Reposición de piezas',
+      overlay: true,
+      productos: [],
+      pasoActual: null,
+      showError: false,
+      items: [
+        {
+          Orden: this.item.orden,
+          Cliente: this.item.cliente,
+          Paso: this.item.paso,
+        },
+      ],
+    }
+  },
+
+  computed: {
+    tablaProductos() {
+      let tmp = this.productos.map((item) => {
+        return {
+          Orden: item.id_orden,
+          Producto: item.producto,
+          Talla: item.talla,
+          Cantidad: item.cantidad,
+          Tela: item.tela,
+          Corte: item.corte,
+          Reponer: item._id,
+        }
+      })
+
+      return tmp
     },
 
-    computed: {
-      modal: function () {
-        const rand = Math.random().toString(36).substring(2, 7)
-        return `modal-${rand}`
-      },
+    modal: function () {
+      const rand = Math.random().toString(36).substring(2, 7)
+      return `modal-${rand}`
+    },
+  },
+
+  methods: {
+    async getPasoActual() {
+      this.overlay = true
+      await axios
+        .get(`${this.$config.API}/lotes/paso-actual/${this.item.orden}`)
+        .then((resp) => {
+          this.pasoActual = resp.data.paso
+          // this.overlay = false
+        })
     },
 
-    methods: {
-      async getData() {
-        this.overlay = true
-        await axios.get(`${this.$config.API}/disenos/link/${this.item.linkdrive}`).then((resp) => {
-          this.urlLink = resp.data.linkdrive
+    async getProductos() {
+      this.overlay = true
+      await axios
+        .get(`${this.$config.API}/productos-asignados/${this.item.orden}`)
+        .then((resp) => {
+          this.productos = resp.data.data
           this.overlay = false
         })
-      },
-
-      async updateData() {
-        this.overlay = true
-        const data = new URLSearchParams()
-              data.set('url', this.urlLink)
-              data.set('id', this.item.linkdrive)
-
-              await axios.post(`${this.$config.API}/disenos/link`, data).then(res => {
-          this.overlay = false
-          // this.urlLink = res.data.linkdrive
-              })
-      },
     },
+  },
 
-    props: ['item', 'departamento'],
+  props: ['item'],
 
-    mounted() {
-      this.overlay = false
-    },
-  }
-  </script>
+  mounted() {
+    this.$root.$on('bv::modal::show', (bvEvent, modalId) => {
+      this.getPasoActual().then(() => {
+        this.getProductos()
+        this.overlay = false
+      })
+    })
+  },
+}
+</script>
 
-  <style>
-  .float-button {
-    width: 100%;
-    float: left;
-    margin-bottom: 40px;
-    margin-top: 1rem;
-  }
+<style>
+.float-button {
+  width: 100%;
+  float: left;
+  margin-bottom: 40px;
+  margin-top: 1rem;
+}
 
-  .image img {
-    width: auto;
-  }
-  </style>
+.image img {
+  width: auto;
+}
+</style>
