@@ -18,6 +18,10 @@
           <menus-menuProduccion />
         </b-col>
 
+        <b-col v-if="dataUser.departamento === 'Empleado'">
+          <menus-menuEmpleado />
+        </b-col>
+
         <b-col v-if="dataUser.departamento === 'Administración'">
           <menus-menu-admin />
         </b-col>

@@ -16,11 +16,12 @@
           <b-container fluid>
             <b-row>
               <b-col>
-                <h2 class="mb-4">{{ titulo }}</h2>
-                <AdminEmpleadoNuevo @reload="getEmpleados" />
+                <!-- <h3>aqui estoy</h3> -->
+                <h3 class="mb-4 mt-4 text-center">{{ titulo }}</h3>
+                <empleados-OrdenesAsignadas :emp="dataUser.id_empleado" />
               </b-col>
             </b-row>
-            <b-row>
+            <!-- <b-row>
               <b-col>
                 <b-table
                   responsive
@@ -45,7 +46,7 @@
                   </template>
                 </b-table>
               </b-col>
-            </b-row>
+            </b-row> -->
           </b-container>
         </b-overlay>
       </div>
@@ -58,12 +59,11 @@
 <script>
 import { mapState } from 'vuex'
 import axios from 'axios'
-import { urlToHttpOptions } from 'http'
 
 export default {
   data() {
     return {
-      titulo: 'Gestión de Empleados',
+      titulo: 'Tareas asignadas',
       overlay: true,
       dataTable: [],
     }
@@ -103,10 +103,12 @@ export default {
     },
   },
   mounted() {
-    this.getEmpleados().then(() => {
+    this.overlay = false
+
+    /* this.getEmpleados().then(() => {
       console.log('data', this.dataTable)
       this.overlay = false
-    })
+    }) */
   },
 }
 </script>

@@ -49,3 +49,8 @@ em {
   float: left;
   margin-right: 0.4rem;
 }
+
+/* Mobile */
+.mobile > *{
+  font-size: -20px;
+}

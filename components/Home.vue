@@ -12,11 +12,16 @@
           dataUser.departamento === 'Jefe de diseño' ||
           dataUser.departamento === 'Diseño' ||
           dataUser.departamento === 'Producción' ||
+          dataUser.departamento === 'Empleado' ||
           dataUser.departamento === 'Administración'
         "
       >
         <b-container>
-          <b-row class="text-center vh-100" style="margin-top:-8rem" align-v="center">
+          <b-row
+            class="text-center vh-100"
+            style="margin-top: -8rem"
+            align-v="center"
+          >
             <b-col>
               <h1>ninesys 3.2</h1>
               <em>Sistema de contro de procesos</em>
