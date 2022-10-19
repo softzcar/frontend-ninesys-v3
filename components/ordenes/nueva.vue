@@ -1,14 +1,15 @@
 <template>
   <div>
     <b-alert v-if="ordenVinculada" show variant="warning">
-    <h4 class="alert-heading">Orden Vinculada {{ ordenVinculada }}</h4>
-    <p>
-      Este orden estará vinculada con la orden número {{ ordenVinculada }}.
-    </p>
-    <p>
-      Si desea desvincularla seleccione la opción desde la pestaña <strong>Clientes</strong>
-    </p>
-  </b-alert>
+      <h4 class="alert-heading">Orden Vinculada {{ ordenVinculada }}</h4>
+      <p>
+        Este orden estará vinculada con la orden número {{ ordenVinculada }}.
+      </p>
+      <p>
+        Si desea desvincularla seleccione la opción desde la pestaña
+        <strong>Clientes</strong>
+      </p>
+    </b-alert>
 
     <!-- Control buttons-->
     <div class="text-right">
@@ -219,7 +220,12 @@
                     <b-form-select
                       v-model="form.productos[data.index].talla"
                       :options="mySizes"
-                      @change="recalcularSegunTalla(data.index, form.productos[data.index])"
+                      @change="
+                        recalcularSegunTalla(
+                          data.index,
+                          form.productos[data.index]
+                        )
+                      "
                     ></b-form-select>
                   </template>
 
@@ -545,28 +551,30 @@ export default {
   methods: {
     recalcularSegunTalla(index, item) {
       // verificar si la talla es XL
-      let miTalla = item.talla.split("XL")      
+      let miTalla = item.talla.split('XL')
       let montoXL = 0
       let finlaPrice = 0
 
       if (miTalla.length === 2) {
         if (!miTalla[0]) {
-          montoXL = 1 // Un dolar adiconal por la talla XL 
+          montoXL = 1 // Un dolar adiconal por la talla XL
         } else {
           montoXL = parseInt(miTalla[0])
         }
         // this.form.productos[index].xl = montoXL
-        finlaPrice = (parseFloat(this.form.productos[index].precioWoo) + montoXL).toFixed(0)
+        finlaPrice = (
+          parseFloat(this.form.productos[index].precioWoo) + montoXL
+        ).toFixed(0)
       } else {
         finlaPrice = this.form.productos[index].precioWoo
       }
-      
+
       this.form.productos[index].precio = finlaPrice
       this.montoTotalOrden()
     },
 
     reloadVinculo(val) {
-      console.log('Orden a vincular:', val);
+      console.log('Orden a vincular:', val)
       this.ordenVinculada = val
     },
     prev() {
@@ -747,6 +755,7 @@ export default {
     step4() {
       this.$confirm('¿Desea emitir la orden?', 'Finalizar', 'success').then(
         () => {
+          this.overlay = true
           this.finishOrder().then(() => {
             this.$confirm(
               '¿Desea imprimir una copia de la orden orden?',
@@ -767,6 +776,7 @@ export default {
                   formPrint: true,
                 })
               })
+              .then(() => (this.overlay = false))
           })
         }
       )
@@ -1184,15 +1194,15 @@ export default {
       if (this.form.productos.length > 0) {
         this.form.total = 0
         this.form.total = this.form.productos
-        .map((item) => {
-        console.log(`item pago:`, item)
-          
-          return parseFloat(item.precio) * parseInt(item.cantidad)
-        })
-        .reduce((acc, curr) => (acc = acc + curr))
+          .map((item) => {
+            console.log(`item pago:`, item)
+
+            return parseFloat(item.precio) * parseInt(item.cantidad)
+          })
+          .reduce((acc, curr) => (acc = acc + curr))
       }
     },
-    
+
     montoTotalOrden2() {
       if (this.form.productos.length > 0) {
         this.form.total = 0

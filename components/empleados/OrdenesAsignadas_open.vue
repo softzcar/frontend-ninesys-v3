@@ -30,7 +30,7 @@
             </template>
 
             <template #cell(id_lotes_detalles)="data">
-              <b-button variant="success" @click="terminarTrabajo(data.item)"
+              <b-button variant="primary" @click="terminarTrabajo(data.item)"
                 >TERMINAR</b-button
               >
             </template>
