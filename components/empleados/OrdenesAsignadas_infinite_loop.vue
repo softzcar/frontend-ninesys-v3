@@ -1,10 +1,5 @@
 <template>
   <b-container fluid>
-    <pre>
-      {{ ordersList }}
-      <hr>
-      {{ ordenes }}
-    </pre>
     <!-- TABLE ORDERS  -->
     <!-- <b-table :items="ordersList" small striped stacked> </b-table> -->
 

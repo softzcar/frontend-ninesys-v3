@@ -13,6 +13,7 @@
           dataUser.departamento === 'Diseño' ||
           dataUser.departamento === 'Producción' ||
           dataUser.departamento === 'Empleado' ||
+          dataUser.departamento === 'Revisión' ||
           dataUser.departamento === 'Administración'
         "
       >

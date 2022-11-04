@@ -1,9 +1,9 @@
 <template>
   <div>
     <button @click="change()">CHANGE</button>
-    <pre>
+    <!-- <pre>
       {{ t }}
-    </pre>
+    </pre> -->
   </div>
 </template>
 

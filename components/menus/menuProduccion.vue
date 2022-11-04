@@ -11,45 +11,54 @@
                 <b-icon-house-fill></b-icon-house-fill>
               </b-nav-item>
 
-              <b-nav-item to="/produccion/control">
-                Control de Producción
-              </b-nav-item>
+              <router-link class="nav-link" to="/produccion/control" custom v-slot="{ navigate }">
+                <span @click="navigate" @keypress.enter="navigate" role="link">
+                  Control de Producción
+                </span>
+              </router-link>
+              <NuxtLink to="/produccion/control">Control 2</NuxtLink>
 
               <b-nav-item-dropdown text="Inventario" right>
-                <b-dropdown-item to="/inventario/gestion">
-                  Gestión de inventario
-                </b-dropdown-item>
+                <router-link class="nav-link" to="/inventario/gestion" custom v-slot="{ navigate }">
+                  <span @click="navigate" @keypress.enter="navigate" role="link">
+                    Gestión de inventario
+                  </span>
+                </router-link>
                 <hr />
-                <!-- <b-dropdown-item to="/inventario/reportes/general">
-                  Reporte general de invetario
-                </b-dropdown-item> -->
+                <router-link class="nav-link" to="/inventario/reportes/orden" custom v-slot="{ navigate }">
+                  <span @click="navigate" @keypress.enter="navigate" role="link">
+                    Reporte por orden
+                  </span>
+                </router-link>
 
-                <b-dropdown-item to="/inventario/reportes/orden">
-                  Reporte por orden
-                </b-dropdown-item>
+                <router-link class="nav-link" to="/inventario/reportes/insumo" custom v-slot="{ navigate }">
+                  <span @click="navigate" @keypress.enter="navigate" role="link">
+                    Reporte por insumo
+                  </span>
+                </router-link>
+                <router-link class="nav-link" to="/inventario/reportes/producto" custom v-slot="{ navigate }">
+                  <span @click="navigate" @keypress.enter="navigate" role="link">
+                    Reporte por producto
+                  </span>
+                </router-link>
 
-                <b-dropdown-item to="/inventario/reportes/insumo">
-                  Reporte por insumo
-                </b-dropdown-item>
-
-                <b-dropdown-item to="/inventario/reportes/producto">
-                  Reporte por producto
-                </b-dropdown-item>
-
-
-                <b-dropdown-item to="/inventario/reportes/empleado">
-                  Reporte por empleado
-                </b-dropdown-item>
+                <router-link class="nav-link" to="/inventario/reportes/empleado" custom v-slot="{ navigate }">
+                  <span por empleadon @click="navigate" @keypress.enter="navigate" role="link">
+                    Reporte
+                  </span>
+                </router-link>
               </b-nav-item-dropdown>
 
-              <b-nav-item href="/"> Salir</b-nav-item>
+              <router-link class="nav-link" to="/logout" custom v-slot="{ navigate }">
+                <span @click="navigate" @keypress.enter="navigate" role="link">
+                  Salir
+                </span>
+              </router-link>
             </b-navbar-nav>
 
             <!-- Right aligned nav items -->
             <!-- <b-navbar-nav class="ml-auto">
-              <b-nav-item to="/">
-                <b-icon-house-fill></b-icon-house-fill>
-              </b-nav-item>
+
             </b-navbar-nav> -->
           </b-collapse>
         </b-navbar>
@@ -77,6 +86,7 @@ export default {
 .user-info {
   font-size: 1.2rem;
 }
+
 .buscar {
   margin-top: 2rem;
 }

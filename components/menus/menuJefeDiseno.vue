@@ -7,17 +7,35 @@
 
           <b-collapse id="nav-collapse" is-nav>
             <b-navbar-nav>
-              <b-nav-item to="/">
-                <b-icon-house-fill></b-icon-house-fill>
-              </b-nav-item>
+              <router-link class="nav-link" to="/" custom v-slot="{ navigate }">
+                <span @click="navigate" @keypress.enter="navigate" role="link">
+                  <b-icon-house-fill></b-icon-house-fill>
+                </span>
+              </router-link>
 
-              <b-nav-item to="/diseno/asignacion"> Asignacion </b-nav-item>
+              <router-link class="nav-link" to="/diseno/asignacion" custom v-slot="{ navigate }">
+                <span @click="navigate" @keypress.enter="navigate" role="link">
+                  Asignación
+                </span>
+              </router-link>
 
-              <b-nav-item to="/diseno/disenos"> Diseños </b-nav-item>
+              <router-link class="nav-link" to="/diseno/disenos" custom v-slot="{ navigate }">
+                <span @click="navigate" @keypress.enter="navigate" role="link">
+                  Diseños
+                </span>
+              </router-link>
 
-              <b-nav-item to="/diseno/terminados"> Terminados </b-nav-item>
+              <router-link class="nav-link" to="/diseno/terminados" custom v-slot="{ navigate }">
+                <span @click="navigate" @keypress.enter="navigate" role="link">
+                  Terminados
+                </span>
+              </router-link>
 
-              <b-nav-item href="/"> Salir</b-nav-item>
+              <router-link class="nav-link" to="/" custom v-slot="{ navigate }">
+                <span @click="navigate" @keypress.enter="navigate" role="link">
+                  Salir
+                </span>
+              </router-link>
             </b-navbar-nav>
 
             <!-- Right aligned nav items -->
@@ -52,6 +70,7 @@ export default {
 .user-info {
   font-size: 1.2rem;
 }
+
 .buscar {
   margin-top: 2rem;
 }

@@ -6,12 +6,10 @@
 
     <div v-else>
       <menus-MenuLoader />
-      <div
-        v-if="
-          dataUser.departamento === 'Administración' ||
-          dataUser.departamento === 'Empleado'
-        "
-      >
+      <div v-if="
+        dataUser.departamento === 'Administración' ||
+        dataUser.departamento === 'Empleado'
+      ">
         <b-overlay :show="overlay" spinner-small>
           <b-container fluid>
             <b-row>
@@ -51,7 +49,9 @@
         </b-overlay>
       </div>
 
-      <div v-else><accessDenied /></div>
+      <div v-else>
+        <accessDenied />
+      </div>
     </div>
   </div>
 </template>
@@ -105,10 +105,10 @@ export default {
   mounted() {
     this.overlay = false
 
-    /* this.getEmpleados().then(() => {
+    this.getEmpleados().then(() => {
       console.log('data', this.dataTable)
       this.overlay = false
-    }) */
+    })
   },
 }
 </script>

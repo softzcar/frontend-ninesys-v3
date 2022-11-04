@@ -8,89 +8,132 @@
           <b-collapse id="nav-collapse" is-nav>
             <b-navbar-nav>
               <b-nav-item to="/">
-                <b-icon-house-fill></b-icon-house-fill>
               </b-nav-item>
+              <router-link class="nav-link" to="/" custom v-slot="{ navigate }">
+                <span @click="navigate" @keypress.enter="navigate" role="link">
+                  <b-icon-house-fill></b-icon-house-fill>
+                </span>
+              </router-link>
 
               <b-nav-item-dropdown text="Ordenes y Lotes" right>
-                <b-dropdown-item to="/comercializacion/ordenes"
-                  >Nueva Orden</b-dropdown-item
-                >
-                <b-dropdown-item to="/comercializacion/ordenes/activas"
-                  >Ordenes en Curso</b-dropdown-item
-                >
+                <b-dropdown-item to="/">Nueva Orden</b-dropdown-item>
+                <router-link class="nav-link" to="/comercializacion/ordenes" custom v-slot="{ navigate }">
+                  <span @click="navigate" @keypress.enter="navigate" role="link">
+                    Nueva Orden
+                  </span>
+                </router-link>
+                <b-dropdown-item to="/">Ordenes en Curso</b-dropdown-item>
+                <router-link class="nav-link" to="/comercializacion/ordenes/activas" custom v-slot="{ navigate }">
+                  <span @click="navigate" @keypress.enter="navigate" role="link">
+                    Ordenes En Curso
+                  </span>
+                </router-link>
               </b-nav-item-dropdown>
 
               <b-nav-item-dropdown text="Diseños" right>
-                <b-dropdown-item to="/diseno/asignacion">
-                  Asignacion
-                </b-dropdown-item>
+                <router-link class="nav-link" to="/diseno/asignacion" custom v-slot="{ navigate }">
+                  <span @click="navigate" @keypress.enter="navigate" role="link">
+                    Asignación
+                  </span>
+                </router-link>
 
-                <b-dropdown-item to="/diseno/disenos">
-                  Diseños
-                </b-dropdown-item>
+                <router-link class="nav-link" to="/diseno/disenos" custom v-slot="{ navigate }">
+                  <span @click="navigate" @keypress.enter="navigate" role="link">
+                    Diseños
+                  </span>
+                </router-link>
 
-                <b-dropdown-item to="/diseno/terminados">
-                  Terminados
-                </b-dropdown-item>
+                <router-link class="nav-link" to="/diseno/terminados" custom v-slot="{ navigate }">
+                  <span @click="navigate" @keypress.enter="navigate" role="link">
+                    Terminados
+                  </span>
+                </router-link>
               </b-nav-item-dropdown>
 
-              <b-nav-item to="/produccion/control">
-                Control de Producción
-              </b-nav-item>
+              <router-link class="nav-link" to="/produccion/control" custom v-slot="{ navigate }">
+                <span @click="navigate" @keypress.enter="navigate" role="link">
+                  Control de Producción
+                </span>
+              </router-link>
 
               <b-nav-item-dropdown text="Inventario" right>
-                <b-dropdown-item to="/inventario/gestion">
-                  Gestión de inventario
-                </b-dropdown-item>
+                <router-link class="nav-link" to="/inventario/gestion" custom v-slot="{ navigate }">
+                  <span @click="navigate" @keypress.enter="navigate" role="link">
+                    Gestión de inventario
+                  </span>
+                </router-link>
                 <hr />
                 <!-- <b-dropdown-item to="/inventario/reportes/general">
                   Reporte general de invetario
                 </b-dropdown-item> -->
 
-                <b-dropdown-item to="/inventario/reportes/orden">
-                  Reporte por orden
-                </b-dropdown-item>
+                <router-link class="nav-link" to="/inventario/reportes/orden" custom v-slot="{ navigate }">
+                  <span @click="navigate" @keypress.enter="navigate" role="link">
+                    Reporte por orden
+                  </span>
+                </router-link>
 
-                <b-dropdown-item to="/inventario/reportes/insumo">
-                  Reporte por insumo
-                </b-dropdown-item>
+                <router-link class="nav-link" to="/inventario/reportes/insumo" custom v-slot="{ navigate }">
+                  <span @click="navigate" @keypress.enter="navigate" role="link">
+                    Reporte por insumo
+                  </span>
+                </router-link>
 
-                <b-dropdown-item to="/inventario/reportes/producto">
-                  Reporte por producto
-                </b-dropdown-item>
+                <router-link class="nav-link" to="/inventario/reportes/producto" custom v-slot="{ navigate }">
+                  <span @click="navigate" @keypress.enter="navigate" role="link">
+                    Reporte por producto
+                  </span>
+                </router-link>
 
 
-                <b-dropdown-item to="/inventario/reportes/empleado">
-                  Reporte por empleado
-                </b-dropdown-item>
+                <router-link class="nav-link" to="/inventario/reportes/empleado" custom v-slot="{ navigate }">
+                  <span @click="navigate" @keypress.enter="navigate" role="link">
+                    Reporte por empleado
+                  </span>
+                </router-link>
               </b-nav-item-dropdown>
 
               <b-nav-item-dropdown text="Empleados" right>
-                <b-dropdown-item to="/empleados/gestion">
-                  Gestión de empleados
-                </b-dropdown-item>
+                <router-link class="nav-link" to="/empleados/gestion" custom v-slot="{ navigate }">
+                  <span @click="navigate" @keypress.enter="navigate" role="link">
+                    Gestión de empleados
+                  </span>
+                </router-link>
 
-                <b-dropdown-item to="/asistencias">
-                  Asistencias
-                </b-dropdown-item>
+                <router-link class="nav-link" to="/asistencias" custom v-slot="{ navigate }">
+                  <span @click="navigate" @keypress.enter="navigate" role="link">
+                    Asistencias
+                  </span>
+                </router-link>
 
-                <b-dropdown-item to="/empleados">
-                  Reporte semanal de asistencias
-                </b-dropdown-item>
+                <router-link class="nav-link" to="/empleados" custom v-slot="{ navigate }">
+                  <span @click="navigate" @keypress.enter="navigate" role="link">
+                    Reporte semanal de asistencias
+                  </span>
+                </router-link>
               </b-nav-item-dropdown>
 
 
               <b-nav-item-dropdown text="Varios" right>
-                <b-dropdown-item to="/tallas">
-                  Tallas
-                </b-dropdown-item>
-                
+                <router-link class="nav-link" to="/tallas" custom v-slot="{ navigate }">
+                  <span @click="navigate" @keypress.enter="navigate" role="link">
+                    Tallas
+                  </span>
+                </router-link>
 
-                <b-dropdown-item to="/ayuda">
-                  Ayuda
+                <b-dropdown-item to="/">
                 </b-dropdown-item>
+                <router-link class="nav-link" to="/ayuda" custom v-slot="{ navigate }">
+                  <span @click="navigate" @keypress.enter="navigate" role="link">
+                    Ayuda
+                  </span>
+                </router-link>
               </b-nav-item-dropdown>
-              <b-nav-item href="/"> Salir</b-nav-item>
+              <router-link class="nav-link" to="/logout" custom v-slot="{ navigate }">
+                <span @click="navigate" @keypress.enter="navigate" role="link">
+                  Salir
+                </span>
+              </router-link>
             </b-navbar-nav>
 
             <!-- Right aligned nav items -->
@@ -125,6 +168,7 @@ export default {
 .user-info {
   font-size: 1.2rem;
 }
+
 .buscar {
   margin-top: 2rem;
 }

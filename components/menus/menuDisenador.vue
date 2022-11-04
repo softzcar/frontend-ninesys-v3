@@ -11,20 +11,26 @@
                 <b-icon-house-fill></b-icon-house-fill>
               </b-nav-item>
 
-              <b-nav-item to="/diseno/disenos"> Diseños </b-nav-item>
+              <router-link class="nav-link" to="/diseno/disenos" custom v-slot="{ navigate }">
+                <span @click="navigate" @keypress.enter="navigate" role="link">
+                  Diseños
+                </span>
+              </router-link>
+
               <b-nav-item to="/diseno/terminados">
-                Diseños Terminados
               </b-nav-item>
+              <router-link class="nav-link" to="/diseno/terminados" custom v-slot="{ navigate }">
+                <span @click="navigate" @keypress.enter="navigate" role="link">
+                  Diseños Terminados
+                </span>
+              </router-link>
 
-              <b-nav-item href="/"> Salir</b-nav-item>
+              <router-link class="nav-link" to="/logout" custom v-slot="{ navigate }">
+                <span @click="navigate" @keypress.enter="navigate" role="link">
+                  Salir
+                </span>
+              </router-link>
             </b-navbar-nav>
-
-            <!-- Right aligned nav items -->
-            <!-- <b-navbar-nav class="ml-auto">
-              <b-nav-item to="/">
-                <b-icon-house-fill></b-icon-house-fill>
-              </b-nav-item>
-            </b-navbar-nav> -->
           </b-collapse>
         </b-navbar>
       </b-col>
@@ -51,6 +57,7 @@ export default {
 .user-info {
   font-size: 1.2rem;
 }
+
 .buscar {
   margin-top: 2rem;
 }

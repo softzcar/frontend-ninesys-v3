@@ -13,42 +13,40 @@
                 </span>
               </router-link>
 
-              <router-link class="nav-link" to="/comercializacion/ordenes" custom v-slot="{ navigate }">
+              <router-link class="nav-link" to="/produccion/control" custom v-slot="{ navigate }">
                 <span @click="navigate" @keypress.enter="navigate" role="link">
-                  Nueva Orden
+                  Control de Producción
                 </span>
               </router-link>
 
-              <router-link class="nav-link" to="/comercializacion/ordenes/activas" custom v-slot="{ navigate }">
-                <span @click="navigate" @keypress.enter="navigate" role="link">
-                  Ordenes En Curso
-                </span>
-              </router-link>
-
-              <b-nav-item-dropdown text="Reportes" right>
-                <router-link class="nav-link" to="/comercializacion/reportes/pagos-abonos" custom v-slot="{ navigate }">
+              <b-nav-item-dropdown text="Inventario" right>
+                <router-link class="nav-link" to="/inventario/gestion" custom v-slot="{ navigate }">
                   <span @click="navigate" @keypress.enter="navigate" role="link">
-                    Pagos y Abonos
+                    Gestión de inventario
                   </span>
                 </router-link>
-
                 <hr />
-
-                <router-link class="nav-link" to="/comercializacion/reportes/terminadas" custom v-slot="{ navigate }">
+                <router-link class="nav-link" to="/inventario/reportes/orden" custom v-slot="{ navigate }">
                   <span @click="navigate" @keypress.enter="navigate" role="link">
-                    Ordenes Terminadas
+                    Reporte por orden
                   </span>
                 </router-link>
 
-                <router-link class="nav-link" to="/comercializacion/reportes/entregadas" custom v-slot="{ navigate }">
+                <router-link class="nav-link" to="/inventario/reportes/insumo" custom v-slot="{ navigate }">
                   <span @click="navigate" @keypress.enter="navigate" role="link">
-                    Ordenes Entregadas
+                    Reporte por insumo
                   </span>
                 </router-link>
 
-                <router-link class="nav-link" to="/comercializacion/reportes/general" custom v-slot="{ navigate }">
+                <router-link class="nav-link" to="/inventario/reportes/producto" custom v-slot="{ navigate }">
                   <span @click="navigate" @keypress.enter="navigate" role="link">
-                    Reporte General de Ordenes
+                    Reporte por producto
+                  </span>
+                </router-link>
+
+                <router-link class="nav-link" to="/inventario/reportes/empleado" custom v-slot="{ navigate }">
+                  <span @click="navigate" @keypress.enter="navigate" role="link">
+                    Reporte por empleado
                   </span>
                 </router-link>
               </b-nav-item-dropdown>

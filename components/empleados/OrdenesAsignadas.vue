@@ -1,9 +1,5 @@
 <template>
   <div>
-    <pre>
-      {{ ordersList }}
-      {{ ordenes }}
-    </pre>
     <b-overlay :show="overlay" spinner-small>
       <div v-if="ordenesSize < 1">
         <b-container>
@@ -30,8 +26,8 @@
                   block
                   size="xl"
                   @click="row.toggleDetails"
-                  >{{ row.item.orden }}</b-button
-                >
+                  >{{ row.item.orden }}
+                </b-button>
               </div>
             </template>
 
@@ -53,12 +49,9 @@
                       @reload="reloadMe"
                       :item="row.item"
                     />
-                    <!-- ok {{ row.item.id_lotes_detalles }} -->
-                    <!-- <b-button
-                      variant="success"
-                      @click="terminarTrabajo(row.item)"
-                      >TERMINAR</b-button
-                    > -->
+                  </template>
+                  <template #cell(detalle)="row">
+                    <empleados-ver-detalle :idorden="row.item.id_orden" />
                   </template>
                   <template #cell(id_orden)="row">
                     <h4 class="mb-4">
@@ -71,54 +64,9 @@
                     {{ maquetarPrioridad(row.item.prioridad) }}
                   </template>
                 </b-table>
-
-                <!-- <pre>
-                  {{ filterOrder(row.item.orden) }}
-                </pre> -->
-                <!-- <ul>
-                  <li v-for="(value, key) in row.item" :key="key">
-                    {{ key }}: {{ value }}
-                  </li>
-                </ul> -->
               </b-card>
             </template>
           </b-table>
-
-          <!-- <b-table small striped stacked :items="ordenes" :fields="fields">
-            <template #cell(id_orden)="row">
-              <h4 class="mb-4">
-                {{ row.item.id_orden }}
-                <small style="font-size: 75%"
-                  >{{ row.item.producto }} | Talla {{ row.item.talla }}</small
-                >
-              </h4>
-              <b-button size="xl" @click="row.toggleDetails">
-                {{ row.detailsShowing ? '🔙' : '👀' }}
-              </b-button>
-              <b-button
-                block
-                variant="primary"
-                @click="terminarTrabajo(row.item)"
-                >TERMINAR</b-button
-              >
-              {{ maquetarPrioridad(row.item.prioridad) }}
-            </template>
-
-            <template #row-details="row">
-              <b-card>
-                <ul>
-                  <li v-for="(value, key) in row.item" :key="key">
-                    {{ key }}: {{ value }}
-                  </li>
-                </ul>
-              </b-card>
-            </template>
-            <template #cell(id_lotes_detalles)="data">
-              <b-button variant="success" @click="terminarTrabajo(data.item)"
-                >TERMINAR</b-button
-              >
-            </template>
-          </b-table> -->
         </b-container>
       </div>
     </b-overlay>
@@ -134,7 +82,7 @@ export default {
       showAlert: true,
       ordenes: [],
       pagos: [],
-      overlay: true,
+      overlay: false,
       reload: false,
       fields2: [
         {
@@ -157,6 +105,7 @@ export default {
           key: 'unidades_solicitadas',
           label: 'Unidades',
         },
+
         {
           key: 'id_empleado',
           thClass: 'd-none',
@@ -173,6 +122,11 @@ export default {
         {
           key: 'tela',
           label: 'Tela',
+        },
+        {
+          key: 'detalle',
+          label: '',
+          class: 'text-center',
         },
         {
           key: 'id_lotes_detalles',
@@ -192,11 +146,11 @@ export default {
     reload() {
       // console.log('RELOAD', val)
       if (this.reload) {
-        this.getOrdenesAsignadas().then(() => {
-          this.items = this.ordenes
+        this.reloadMe()
+        /* this.getOrdenesAsignadas().then(() => {
           this.overlay = false
           this.reload = false
-        })
+        }) */
       }
     },
   },
@@ -206,13 +160,6 @@ export default {
       if (!Array.isArray(this.pagos)) {
         this.pagos = []
       }
-
-      let pagados = this.pagos.map((el) => {
-        return {
-          id_lotes_detalles: el,
-        }
-      })
-      console.log('pagados', pagados)
 
       let tmp = this.ordenes
         .map((item) => {
@@ -225,28 +172,27 @@ export default {
           return {
             orden: item.id_orden,
             variant: txtVariant,
+            terminado: item.fecha_terminado,
           }
         })
         .reduce((acc, item) => {
+          console.log('item to push', item)
+
           if (acc.filter((row) => row.orden === item.orden).length === 0) {
             acc.push(item)
           }
           return acc
         }, [])
+      // .filter((el) => el.terminado === null)
 
-      this.pagos.forEach((pago) => {
-        tmp.forEach((item, index, object) => {
-          if (item.id_lote_detalles == pago.id_lote_detalles) {
-            console.log('eliminar ', pago)
-            object.splice(index)
-          }
-        })
-      })
+      console.log('TMP', tmp)
+
       return tmp
     },
 
     ordenesSize() {
-      const size = parseInt(this.ordenes.length)
+      let size = null
+      size = parseInt(this.ordenes.length)
       return size
     },
   },
@@ -271,8 +217,9 @@ export default {
         .get(`${this.$config.API}/empleados/ordenes-asignadas/${this.emp}`)
         .then((resp) => {
           this.ordenes = resp.data.items
-          this.pagos = resp.data.pagos[0]
-          this.overlay = false
+          if (resp.data.pagos[0].length) {
+            this.pagos = resp.data.pagos[0]
+          }
         })
     },
 
@@ -294,13 +241,14 @@ export default {
     reloadMe() {
       this.getOrdenesAsignadas().then(() => {
         this.items = this.ordenes
-        this.overlay = false
       })
     },
   },
 
   mounted() {
+    this.overlay = true
     this.reloadMe()
+    this.overlay = false
   },
 
   props: ['emp'],

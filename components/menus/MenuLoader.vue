@@ -25,6 +25,10 @@
         <b-col v-if="dataUser.departamento === 'Administración'">
           <menus-menu-admin />
         </b-col>
+
+        <b-col v-if="dataUser.departamento === 'Revisión'">
+          <menus-menu-revision />
+        </b-col>
       </b-row>
 
       <b-row>

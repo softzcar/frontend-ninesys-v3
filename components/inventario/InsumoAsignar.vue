@@ -12,11 +12,11 @@
     >
       <b-overlay :show="overlay" spinner-small>
         <p class="my-4">
-          <pre>
+          <!-- <pre>
             EMP: {{ empleado }}
             <hr />
             PROPS: {{ $props }}
-          </pre>
+          </pre> -->
           <b-list-group>
             <b-list-group-item
               ><strong>Producto:</strong> {{ datos.name }}</b-list-group-item
@@ -197,7 +197,7 @@ export default {
             })
         })
     },
-    
+
     // OBTENER MOVIMIENTOS DEL INSUMO PARA ESTA ORDEN
     async getMovimientos() {
       await axios

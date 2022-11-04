@@ -20,6 +20,18 @@ em {
   color: red;
   font-weight: 800;
 }
+
+/* NAVIGATION */
+.nav-link {
+  cursor: pointer;
+}
+.dropdown-menu {
+  background-color: transparent !important;
+  border: none !important;
+}
+.dropdown-menu .nav-link{
+  padding-left: 1.4rem !important;
+}
 /* WIZARD */
 
 .vue-form-wizard .wizard-icon-circle .wizard-icon-container {

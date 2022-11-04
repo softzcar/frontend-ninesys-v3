@@ -15,23 +15,12 @@
 
               <router-link
                 class="nav-link"
-                to="/empleados/dashboard"
+                to="/revision"
                 custom
                 v-slot="{ navigate }"
               >
                 <span @click="navigate" @keypress.enter="navigate" role="link">
-                  Ordenes Asignadas
-                </span>
-              </router-link>
-
-              <router-link
-                class="nav-link"
-                to="/empleados/pagos"
-                custom
-                v-slot="{ navigate }"
-              >
-                <span @click="navigate" @keypress.enter="navigate" role="link">
-                  Relación de Trabajos
+                  Trabajos
                 </span>
               </router-link>
 
@@ -46,13 +35,6 @@
                 </span>
               </router-link>
             </b-navbar-nav>
-
-            <!-- Right aligned nav items -->
-            <!-- <b-navbar-nav class="ml-auto">
-              <b-nav-item to="/">
-                <b-icon-house-fill></b-icon-house-fill>
-              </b-nav-item>
-            </b-navbar-nav> -->
           </b-collapse>
         </b-navbar>
       </b-col>
