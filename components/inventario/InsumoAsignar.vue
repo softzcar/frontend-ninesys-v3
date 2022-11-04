@@ -69,7 +69,7 @@
               <b-button variant="danger" @click="filterData(data.item._id)">
                 <b-icon-trash></b-icon-trash>
               </b-button>
-              <inventario-InsumoMovimientos :item="data.item" :datos="datos" />
+              <!-- <inventario-InsumoMovimientos :item="data.item" :datos="datos" /> -->
             </template>
           </b-table>
         </p>

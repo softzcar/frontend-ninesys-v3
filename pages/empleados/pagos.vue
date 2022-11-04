@@ -19,7 +19,6 @@
                 <!-- <h3>aqui estoy</h3> -->
                 <h3 class="mb-4 mt-4 text-center">{{ titulo }}</h3>
                 <empleados-TablaDePagos :emp="dataUser.id_empleado" />
-                tabla de pagos aqui
               </b-col>
             </b-row>
             <!-- <b-row>

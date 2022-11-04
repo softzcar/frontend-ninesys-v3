@@ -11,45 +11,101 @@
                 <b-icon-house-fill></b-icon-house-fill>
               </b-nav-item>
 
-              <router-link class="nav-link" to="/produccion/control" custom v-slot="{ navigate }">
+              <router-link
+                class="nav-link"
+                to="/produccion/control"
+                custom
+                v-slot="{ navigate }"
+              >
                 <span @click="navigate" @keypress.enter="navigate" role="link">
                   Control de Producción
                 </span>
               </router-link>
-              <NuxtLink to="/produccion/control">Control 2</NuxtLink>
 
               <b-nav-item-dropdown text="Inventario" right>
-                <router-link class="nav-link" to="/inventario/gestion" custom v-slot="{ navigate }">
-                  <span @click="navigate" @keypress.enter="navigate" role="link">
+                <router-link
+                  class="nav-link"
+                  to="/inventario/gestion"
+                  custom
+                  v-slot="{ navigate }"
+                >
+                  <span
+                    @click="navigate"
+                    @keypress.enter="navigate"
+                    role="link"
+                  >
                     Gestión de inventario
                   </span>
                 </router-link>
                 <hr />
-                <router-link class="nav-link" to="/inventario/reportes/orden" custom v-slot="{ navigate }">
-                  <span @click="navigate" @keypress.enter="navigate" role="link">
+                <router-link
+                  class="nav-link"
+                  to="/inventario/reportes/orden"
+                  custom
+                  v-slot="{ navigate }"
+                >
+                  <span
+                    @click="navigate"
+                    @keypress.enter="navigate"
+                    role="link"
+                  >
                     Reporte por orden
                   </span>
                 </router-link>
 
-                <router-link class="nav-link" to="/inventario/reportes/insumo" custom v-slot="{ navigate }">
-                  <span @click="navigate" @keypress.enter="navigate" role="link">
+                <router-link
+                  class="nav-link"
+                  to="/inventario/reportes/insumo"
+                  custom
+                  v-slot="{ navigate }"
+                >
+                  <span
+                    @click="navigate"
+                    @keypress.enter="navigate"
+                    role="link"
+                  >
                     Reporte por insumo
                   </span>
                 </router-link>
-                <router-link class="nav-link" to="/inventario/reportes/producto" custom v-slot="{ navigate }">
-                  <span @click="navigate" @keypress.enter="navigate" role="link">
+                <router-link
+                  class="nav-link"
+                  to="/inventario/reportes/producto"
+                  custom
+                  v-slot="{ navigate }"
+                >
+                  <span
+                    @click="navigate"
+                    @keypress.enter="navigate"
+                    role="link"
+                  >
                     Reporte por producto
                   </span>
                 </router-link>
 
-                <router-link class="nav-link" to="/inventario/reportes/empleado" custom v-slot="{ navigate }">
-                  <span por empleadon @click="navigate" @keypress.enter="navigate" role="link">
+                <router-link
+                  class="nav-link"
+                  to="/inventario/reportes/empleado"
+                  custom
+                  v-slot="{ navigate }"
+                >
+                  <span
+                    por
+                    empleadon
+                    @click="navigate"
+                    @keypress.enter="navigate"
+                    role="link"
+                  >
                     Reporte
                   </span>
                 </router-link>
               </b-nav-item-dropdown>
 
-              <router-link class="nav-link" to="/logout" custom v-slot="{ navigate }">
+              <router-link
+                class="nav-link"
+                to="/logout"
+                custom
+                v-slot="{ navigate }"
+              >
                 <span @click="navigate" @keypress.enter="navigate" role="link">
                   Salir
                 </span>

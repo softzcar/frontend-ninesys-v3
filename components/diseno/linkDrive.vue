@@ -7,12 +7,16 @@
     <b-modal :size="size" :title="title" :id="modal" hide-footer>
       <b-overlay :show="overlay" spinner-small>
         <p>
-          <pre>{{ item }}</pre>
+          <!-- <pre>{{ item }}</pre> -->
         </p>
         <b-container>
           <b-row>
             <b-col xl="6" lg="6" md="6" sm="12">
-              <b-form-input type="url" v-model="urlLink" @change="updateLink"></b-form-input>
+              <b-form-input
+                type="url"
+                v-model="urlLink"
+                @change="updateLink"
+              ></b-form-input>
               <a :href="urlLink" target="_blank">Abrir documentos</a>
             </b-col>
           </b-row>
@@ -46,22 +50,24 @@ export default {
   methods: {
     async getLink() {
       this.overlay = true
-      await axios.get(`${this.$config.API}/disenos/link/${this.item.linkdrive}`).then((resp) => {
-        this.urlLink = resp.data.linkdrive
-        this.overlay = false
-      })
+      await axios
+        .get(`${this.$config.API}/disenos/link/${this.item.linkdrive}`)
+        .then((resp) => {
+          this.urlLink = resp.data.linkdrive
+          this.overlay = false
+        })
     },
 
     async updateLink() {
       this.overlay = true
       const data = new URLSearchParams()
-			data.set('url', this.urlLink)
-			data.set('id', this.item.linkdrive)
+      data.set('url', this.urlLink)
+      data.set('id', this.item.linkdrive)
 
-			await axios.post(`${this.$config.API}/disenos/link`, data).then(res => {
+      await axios.post(`${this.$config.API}/disenos/link`, data).then((res) => {
         this.overlay = false
         // this.urlLink = res.data.linkdrive
-			})
+      })
     },
 
     token() {
@@ -84,9 +90,9 @@ export default {
   mounted() {
     this.getLink().then(() => {
       if (!this.urlLink) {
-        console.log('no temenos link :()');
+        console.log('no temenos link :()')
       } else {
-        console.log('el link es', this.urlLink);
+        console.log('el link es', this.urlLink)
       }
     })
   },
